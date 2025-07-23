@@ -67,7 +67,7 @@ function sendEmail($formData, $type) {
     if ($type === 'quote') {
       $body .= "<p><strong>Type:</strong> " . $type . "</p>";
         $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
-        $body .= "<p><strong>Phone:</strong> " . htmlspecialchars($formData['phone']) . "</p>";
+        $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
         $altBody .= "Email: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\n";
     }else if($type === 'subscribe'){
       $body .= "<p><strong>Type:</strong> " . $type . "</p>";
@@ -78,13 +78,13 @@ function sendEmail($formData, $type) {
        $body .= "<p><strong>Type:</strong> " . $type . "</p>";
        $body .= "<p><strong>Country:</strong> " . htmlspecialchars($formData['country']) . "</p>";
        $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
-       $body .= "<p><strong>Phone:</strong> " . htmlspecialchars($formData['phone']) . "</p>";
+        $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
        $altBody .= "Email: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\n";
     }else {
         $body .= "<p><strong>Trip Type:</strong> " . htmlspecialchars($type) . "</p>";
         $body .= "<p><strong>Name:</strong> " . htmlspecialchars($formData['full_name']) . "</p>";
         $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
-        $body .= "<p><strong>Phone:</strong> " . htmlspecialchars($formData['phone']) . "</p>";
+        $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
         $body .= "<p><strong>Departure Date:</strong> " . htmlspecialchars($formData['departure_date']) . "</p>";
         $body .= "<p><strong>Arrival Date:</strong> " . htmlspecialchars($formData['arrival_date']) . "</p>";
         $body .= "<p><strong>Departure Place:</strong> " . htmlspecialchars($formData['departure_place']) . "</p>";
@@ -159,9 +159,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $formData['departure_place'] = trim(filter_input(INPUT_POST, 'departure_place', FILTER_SANITIZE_STRING));
     $formData['phone'] = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING));
 
-    if ($type === 'multi-trip') {
+    if ($type === 'round-trip') {
       $multiArrival = $_POST['arrival_place'] ?? [];
+      $multiArrival2 = $_POST['departure_place'] ?? [];
       $formData['arrival_place'] = implode(',', array_map('trim', array_filter($multiArrival, 'is_string')));
+      $formData['departure_place'] = implode(',', array_map('trim', array_filter($multiArrival2, 'is_string')));
     } else {
       $formData['arrival_place'] = trim(filter_input(INPUT_POST, 'arrival_place', FILTER_SANITIZE_STRING));
     }
@@ -171,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   if ($stmt->execute()) {
-    $toastr_message = "Record added successfully!";
+    $toastr_message = "Thank You For Visiting Us!";
     $toastr_type = "success";
 
     // Send email
@@ -288,10 +290,10 @@ $conn->close();
 
       <nav id="navmenu" class="navmenu mx-xl-auto">
         <ul>
-          <li><a href="#" class="">Affordable</a></li>
-          <li><a href="#">Last Minute</a></li>
-          <li><a href="#">Business Class</a></li>
-          <li><a href="#">First Class</a></li>
+          <li class="me-2"><span  class="text-white">Affordable</span></li>
+          <li class="me-2"><span class="text-white">Last Minute</span></li>
+          <li class="me-2"><span class="text-white">Business Class</span></li>
+          <li class="me-2"><span class="text-white">First Class</span></li>
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
@@ -312,7 +314,6 @@ $conn->close();
           </li> -->
 
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
       <div class="order-2">
         <span class="text-white me-2 d-md-inline-block d-none">📞 +1 (229) 329-1796</span>
@@ -440,19 +441,22 @@ $conn->close();
           </div>
           <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
             <!-- Trip Type Selector -->
+             <div class="text-center">
+               <h2 class="mb-2 fs-1">Get Quote Details</h2>
+             </div>
             <div class="mb-3 text-center">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="trip_type" id="roundTrip" value="Round Trip" checked />
-                <label class="form-check-label" for="roundTrip">Round Trip</label>
+                <input class="form-check-input fs-4" type="radio" name="trip_type" id="roundTrip" value="Round Trip" checked />
+                <label class="form-check-label fw-medium fs-4" for="roundTrip">Round Trip</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="trip_type" id="oneWay" value="One Way" />
-                <label class="form-check-label" for="oneWay">One Way</label>
+                <input class="form-check-input fs-4" type="radio" name="trip_type" id="oneWay" value="One Way" />
+                <label class="form-check-label fw-medium fs-4" for="oneWay">One Way</label>
               </div>
-              <div class="form-check form-check-inline">
+              <!-- <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="trip_type" id="multiCity" value="Multi-City" />
                 <label class="form-check-label" for="multiCity">Multi-City</label>
-              </div>
+              </div> -->
             </div>
 
             <!-- Round Trip Form -->
@@ -471,10 +475,16 @@ $conn->close();
                 <!-- Route 1 & 2 -->
                 <div class="row g-2 mb-3">
                   <div class="col-md-6">
-                    <input type="text" name="departure_place" placeholder="Departure place" class="form-control" required />
+                    <input type="text" name="departure_place[]" placeholder="Departure place" class="form-control" required />
                   </div>
                   <div class="col-md-6">
-                    <input type="text" name="arrival_place" placeholder="Arrival place" class="form-control" required />
+                    <input type="text" name="arrival_place[]" placeholder="Arrival place" class="form-control" required />
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" name="departure_place[]" placeholder="Departure place" class="form-control" required />
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" name="arrival_place[]" placeholder="Arrival place" class="form-control" required />
                   </div>
                 </div>
                 <!-- Traveler Info -->
@@ -536,47 +546,7 @@ $conn->close();
             </div>
 
             <!-- Multi-City Form -->
-            <div id="multiCityForm" style="display: none;">
-              <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="p-3 border rounded shadow-sm">
-                <input name="type" class="form-control" value="multi-trip" hidden />
-                <!-- Travel Dates (no return date needed) -->
-                <div class="row g-2 mb-3">
-                  <div class="col-md-6">
-                    <input type="date" name="departure_date" class="form-control" required />
-                  </div>
-                  <div class="col-md-6">
-                    <input type="date" name="arrival_date" class="form-control" required />
-                  </div>
-                </div>
-                <!-- Multi Route -->
-                <div class="row g-2 mb-3" id="skills-container">
-                  <div class="col-md-6">
-                    <input type="text" name="departure_place" placeholder="Departure place" class="form-control" required />
-                  </div>
-                  <div id="skill-item" class="col-md-6" data-index="0">
-                    <input type="text" name="arrival_place[]" placeholder="Arrival place" class="form-control skill-input" required />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <button type="button" id="add-more" class="btn btn-primary mt-2">Add More</button>
-                </div>
-                <!-- Traveler Info -->
-                <div class="row g-2 mb-3">
-                  <div class="col-md-12">
-                    <input type="text" class="form-control mb-2" name="full_name" placeholder="Full Name" required />
-                  </div>
-                  <div class="col-md-6">
-                    <input type="email" class="form-control mb-2" name="email" placeholder="Email Address" required />
-                  </div>
-                  <div class="col-md-6">
-                    <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required />
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn-get-started">Get My Quote Now</button>
-                </div>
-              </form>
-            </div>
+        
 
             <div class="mt-4 text-sm text-center">
               <p>24/7 Support | Zero IVR Wait | WhatsApp Deals Available</p>
@@ -1047,7 +1017,7 @@ $conn->close();
             <div class="faq-container">
 
               <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
-                <i class="faq-icon bi bi-question-circle"></i>
+                <i class="faq-icon bi bi-arrow-right-circle"></i>
                 <h3>Why book with GoGoTrips instead of online?</h3>
                 <div class="faq-content">
                   <p>We offer unpublished fares, real human support (no bots), and custom itineraries you won’t find on
@@ -1057,7 +1027,7 @@ $conn->close();
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
-                <i class="faq-icon bi bi-question-circle"></i>
+                <i class="faq-icon bi bi-arrow-right-circle"></i>
                 <h3>Can I book via WhatsApp or phone?</h3>
                 <div class="faq-content">
                   <p>Yes! Simply call or message us with your trip details. We’ll send your quote in minutes—no forms,no
@@ -1067,7 +1037,7 @@ $conn->close();
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
-                <i class="faq-icon bi bi-question-circle"></i>
+                <i class="faq-icon bi bi-arrow-right-circle"></i>
                 <h3>What’s your cancellation and refund policy?</h3>
                 <div class="faq-content">
                   <p>We assist with cancellations, changes, refunds, and airline credit. Our team is available 24/7 to
@@ -1077,7 +1047,7 @@ $conn->close();
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
-                <i class="faq-icon bi bi-question-circle"></i>
+                <i class="faq-icon bi bi-arrow-right-circle"></i>
                 <h3>Do you offer a price match if I find a better deal?</h3>
                 <div class="faq-content">
                   <p>Yes. Send us a screenshot—we’ll match or beat most online prices, with better service included.</p>
@@ -1086,7 +1056,7 @@ $conn->close();
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
-                <i class="faq-icon bi bi-question-circle"></i>
+                <i class="faq-icon bi bi-arrow-right-circle"></i>
                 <h3>Do you help with wheelchairs or other special needs?</h3>
                 <div class="faq-content">
                   <p>Absolutely. We handle wheelchair service, meal requests, medical support, and more—just let us know
@@ -1096,7 +1066,7 @@ $conn->close();
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
-                <i class="faq-icon bi bi-question-circle"></i>
+                <i class="faq-icon bi bi-arrow-right-circle"></i>
                 <h3>What documents do I need to travel to India?</h3>
                 <div class="faq-content">
                   <p>You’ll need a valid passport and an Indian visa or OCI card. We’ll guide you through the latest
@@ -1297,6 +1267,23 @@ $conn->close();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
   <script>
+
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+
+    // Select inputs using name attribute
+    const departureInput = document.querySelector('input[name="arrival_date"]');
+    const arrivalInput = document.querySelector('input[name="departure_date"]');
+
+
+    // Set min attribute for arrival to today
+    arrivalInput.setAttribute('min', today);
+
+    // Update departure min date based on arrival date
+    arrivalInput.addEventListener('change', function() {
+        departureInput.setAttribute('min', arrivalInput.value);
+    });
+    console.log(arrivalInput);
     let modalShown = false;
 
     window.addEventListener('scroll', function() {
