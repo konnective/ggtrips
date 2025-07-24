@@ -429,7 +429,7 @@ $conn->close();
                 <div class="contact-icons mt-3">
                   <a href="tel:+1 229 329-1796" class="me-3 fs-3"><i
                       class="bi bi-telephone-fill call-icon me-2"></i>Call</a>
-                  <a href="https://wa.me/?text=Hello%20there!" class="fs-3"><i class="bi bi-whatsapp whatsapp-icon"></i>WhatsApp</a>    
+                  <a href="https://wa.link/kvj0ei" class="fs-3"><i class="bi bi-whatsapp whatsapp-icon"></i>WhatsApp</a>    
                 </div>
               </div>
             </div>
@@ -490,7 +490,7 @@ $conn->close();
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn-get-started">Get My Quote Now</button>
+                  <button type="submit" class="btn-get-started">Get Your Fare In 10 Minutes</button>
                 </div>
               </form>
             </div>
@@ -530,7 +530,7 @@ $conn->close();
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn-get-started">Get My Quote Now</button>
+                  <button type="submit" class="btn-get-started">Get Your Fare In 10 Minutes</button>
                 </div>
               </form>
             </div>
