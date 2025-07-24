@@ -8,7 +8,8 @@ class EmailConfig
   const SMTP_PASSWORD = 'irxl bnrs vmiv asky';
   const FROM_EMAIL = 'coopermath1@gmail.com';
   const FROM_NAME = 'Go GO Trips';
-  const TO_EMAIL = 'kunj@savitarainfotel.in';
+  const TO_EMAIL = 'info@gogotripsus.com';
+  // const TO_EMAIL = 'kunj@savitarainfotel.in';
 }
 
 // Include PHPMailer classes
@@ -290,10 +291,6 @@ $conn->close();
 
       <nav id="navmenu" class="navmenu mx-xl-auto">
         <ul>
-          <li class="me-2"><span  class="text-white">Affordable</span></li>
-          <li class="me-2"><span class="text-white">Last Minute</span></li>
-          <li class="me-2"><span class="text-white">Business Class</span></li>
-          <li class="me-2"><span class="text-white">First Class</span></li>
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
@@ -316,7 +313,7 @@ $conn->close();
         </ul>
       </nav>
       <div class="order-2">
-        <span class="text-white me-2 d-md-inline-block d-none">📞 +1 (229) 329-1796</span>
+        <span class="text-white me-2 d-md-inline-block d-none"><a href="tel:+1 (229) 329-1796" class="text-white">📞 +1 (229) 329-1796</a></span>
         <a class="btn-getstarted" href="#" data-bs-toggle="modal" data-bs-target="#voucherModal">Get 10% Off Now</a>
       </div>
 
@@ -408,32 +405,31 @@ $conn->close();
       <div class="container">
         <div class="row gy-4 mt-3 justify-content-center align-items-center">
           <div class="col-10">
-            <h1 class="text-center">Make This Christmas Extra Special — Seamless USA–India Travel, Any City, Any Date!
-            </h1>
+            <h1 class="text-center">USA-India Flight Deals For Any City, Any Date!</h1>
             <!-- <h3 class="text-center">Exclusive USA–India Round-Trips — Just $999! Any City, Any Date — Your Journey, Our
               Expertise.</h3> -->
-            <p class="text-center">Share your fare screenshot — we’ll beat the price. If we can’t, enjoy $50 off your
-              next journey as our gift.</p>
+            <p class="text-center">One-Way, Round Trip - We'll Plan Your India Trip Your Way</p>
           </div>
 
           <div class="col-lg-6 order-1 order-lg-1 text-center" data-aos="zoom-out">
             <div class="card fare-card">
               <div class="fare-card-header">
-                DECEMBER EXCLUSIVE FARE
+                EXCLUSIVE FARES FOR <br>
+                DEC 25 & JAN 26
               </div>
               <div class="fare-card-body">
                 <h2 class="mb-2 fs-1">USA to India Round Trip</h2>
-                <p class="mb-2 text-muted fs-3">Book Now - Limited Seats</p>
+                <p class="mb-2 text-muted fs-3">We Beat Any Flight Fare</p>
                 <div class="mb-3">
                   <span class="price">$999*</span>
                   <span class="old-price">$1899</span>
                 </div>
-                <p class="mb-3 fs-3">Holiday Deals You Won't Find Online<br>Expert Agents, Real Care</p>
-                <p class="fw-medium">Call or WhatsApp for Best Fare!</p>
+                <p class="mb-3 fs-3">Share Your Fare Screenshot - <br>We'll beat the price</p>
+                <p class="fw-medium">If we can't, enjoy $50 off your next journey as our gift.</p>
                 <div class="contact-icons mt-3">
                   <a href="tel:+1 229 329-1796" class="me-3 fs-3"><i
                       class="bi bi-telephone-fill call-icon me-2"></i>Call</a>
-                  <a href="tel:+1954-347-5414" class="fs-3"><i class="bi bi-whatsapp whatsapp-icon"></i>WhatsApp</a>
+                  <a href="https://wa.me/?text=Hello%20there!" class="fs-3"><i class="bi bi-whatsapp whatsapp-icon"></i>WhatsApp</a>    
                 </div>
               </div>
             </div>
@@ -442,7 +438,7 @@ $conn->close();
           <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
             <!-- Trip Type Selector -->
              <div class="text-center">
-               <h2 class="mb-2 fs-1">Get Quote Details</h2>
+               <h2 class="mb-2 fs-1">24/7 Urgent Booking Available</h2>
              </div>
             <div class="mb-3 text-center">
               <div class="form-check form-check-inline">
@@ -465,21 +461,15 @@ $conn->close();
                 <!-- Travel Dates -->
                 <input name="type" class="form-control" value="round-trip" hidden />
                 <div class="row g-2 mb-3">
-                  <div class="col-md-6">
-                    <input type="date" name="departure_date" class="form-control" required />
+                  <div class="col-md-6 col-sm-6">
+                    <input type="date" name="departure_date" placeholder="Departure Date" class="form-control" required />
                   </div>
-                  <div class="col-md-6">
-                    <input type="date" name="arrival_date" class="form-control" required />
+                  <div class="col-md-6 col-sm-6">
+                    <input type="date" name="arrival_date" placeholder="Return Date" class="form-control" required />
                   </div>
                 </div>
                 <!-- Route 1 & 2 -->
                 <div class="row g-2 mb-3">
-                  <div class="col-md-6">
-                    <input type="text" name="departure_place[]" placeholder="Departure place" class="form-control" required />
-                  </div>
-                  <div class="col-md-6">
-                    <input type="text" name="arrival_place[]" placeholder="Arrival place" class="form-control" required />
-                  </div>
                   <div class="col-md-6">
                     <input type="text" name="departure_place[]" placeholder="Departure place" class="form-control" required />
                   </div>
@@ -549,7 +539,7 @@ $conn->close();
         
 
             <div class="mt-4 text-sm text-center">
-              <p>24/7 Support | Zero IVR Wait | WhatsApp Deals Available</p>
+              <p>24/7 Support | Zero IVR Wait | Our Team Is Always Here For You.</p>
             </div>
           </div>
         </div>
@@ -638,7 +628,7 @@ $conn->close();
                 <div class="step-icon"><i class="bi bi-calendar2-week"></i></div>
                 <div class="text-center">
                   <div class="step-title">Step 1</div>
-                  <p class="mb-0">Select trip type and travel dates.<br>(Round Trip, One Way, Multi-City)</p>
+                  <p class="mb-0">Select trip type and travel dates.<br>(Round Trip, One Way)</p>
                 </div>
               </div>
 
@@ -947,7 +937,7 @@ $conn->close();
 
           <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
             <div class="card h-100">
-              <video class="img-fluid" controls autoplay muted>
+              <video class="img-fluid" controls muted>
                 <source src="assets/videos/001.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
@@ -963,7 +953,7 @@ $conn->close();
 
           <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
             <div class="card h-100">
-              <video class="img-fluid" controls autoplay muted>
+              <video class="img-fluid" controls muted>
                 <source src="assets/videos/003.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
@@ -979,7 +969,7 @@ $conn->close();
 
           <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
             <div class="card h-100">
-              <video class="img-fluid" controls autoplay muted>
+              <video class="img-fluid" controls muted>
                 <source src="assets/videos/2.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
@@ -1118,9 +1108,10 @@ $conn->close();
                 </a>
                 <p class="text-center mt-2"><strong>Address:</strong> 8 The Green, Suite B,</p>
                 <p class="text-center">Dover,Delaware -19901</p>
-                <p class="mt-3 text-center"><strong>Phone:</strong> <a href="tel:+1 (229) 329-1796" class="text-white">+1 (229) 329-1796</a></p>
-                <p class="mt-3 text-center"><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p>
-                <p class="mt-3 text-center"><strong>Email:</strong> <span>info@gogotripsus.com</span></p>
+                <p class="mt-3 text-center"><strong>Phone:</strong><a href="tel:+1 (229) 329-1796" class="text-white"> +1 (229) 329-1796</a></p>
+                <p class="mt-3 text-center"><strong>WhatsApp:</strong><a href="https://wa.me/?text=Hello%20there!" class="text-white"> +1954-347-5414</a></p>
+                <!-- <p class="mt-3 text-center"><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p> -->
+                <p class="mt-3 text-center"><strong>Email:</strong><a href="mailto:?subject=Hello&body=Hi%20there!" class="text-white"><span> info@gogotripsus.com</span></a></p>
               </div>
               <div class="col-lg-12  footer-links ">
                 <!-- <h4>Useful Links</h4> -->
@@ -1230,7 +1221,7 @@ $conn->close();
       // Event listeners
       roundTripRadio.addEventListener("change", toggleForms);
       oneWayRadio.addEventListener("change", toggleForms);
-      multiCityRadio.addEventListener("change", toggleForms);
+      
 
       // Initialize view on load
       toggleForms();
@@ -1283,7 +1274,6 @@ $conn->close();
     arrivalInput.addEventListener('change', function() {
         departureInput.setAttribute('min', arrivalInput.value);
     });
-    console.log(arrivalInput);
     let modalShown = false;
 
     window.addEventListener('scroll', function() {
