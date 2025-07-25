@@ -264,29 +264,104 @@ $conn->close();
     .swiper-button-prev {
       color: #000;
     }
-    .newsletter-card{
+    .newsletter-vip {
+      max-width: 700px;
+      margin: 25px auto;
+      padding: 20px 15px;
+      background: #102770;
+      border-radius: 10px;
+      text-align: center;
+      color: #fff;
       position: relative;
-      max-width:700px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
     }
-    .newsletter-card img{
-      width: 100%;
-      height: 100%;
+    .newsletter-vip::after {
+      content: "";
+      background: url('https://img.icons8.com/ios-filled/100/ffffff/airplane-take-off.png') no-repeat;
+      opacity: 0.1;
+      background-size: 60px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 60px;
+      height: 60px;
     }
-    .newsletter-input {
-        border-radius: 10px;
-        height: 10%;
-        width: 43%;
-        position: absolute;
-        top: 47%;
-        right: 10%;
-     }
-    .newsletter-btn {
-        height: 10%;
-        width: 22%;
-        position: absolute;
-        top: 60%;
-        right: 21%;
-        font-size:1.1vw;
+    .newsletter-vip h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+    .newsletter-vip p {
+      font-size: 13px;
+      margin: 0 0 15px;
+      color: #e0e0e0;
+    }
+    .vip-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .vip-tags span {
+      font-size: 11px;
+      background: #e91e63;
+      padding: 3px 8px;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 500;
+    }
+    .news-form input{
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    .newsletter-form {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .newsletter-form input {
+      padding: 8px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+      border: none;
+      flex: 1;
+      min-width: 180px;
+      max-width: 260px;
+    }
+    .newsletter-form button {
+      padding: 8px 16px;
+      font-size: 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #e91e63;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .newsletter-form button:hover {
+      background-color: #c2185b;
+    }
+    @media (max-width: 480px) {
+      .newsletter-vip {
+        padding: 15px 10px;
+      }
+      .newsletter-vip h2 {
+        font-size: 18px;
+      }
+      .newsletter-vip p {
+        font-size: 12px;
+      }
+      .newsletter-form {
+        flex-direction: column;
+        align-items: center;
+      }
+      .newsletter-form input, .newsletter-form button {
+        width: 100%;
+        max-width: none;
+      }
     }
 
 
@@ -298,10 +373,6 @@ $conn->close();
     }
 
     @media (min-width: 768px) {
-      .newsletter-card{
-
-      }
-
       iframe,
       video {
         height: 300px;
@@ -371,7 +442,7 @@ $conn->close();
             <span class="text-center  text-muted">AND/OR</span>
             <div class="input-group mb-2">
               <span class="input-group-text">
-                <select name="country" class="form-select border-0 p-0">
+                <select name="country" class="border-0 p-0">
                   <option selected value="US"><img src="assets/img/usa.png" alt="usa" srcset="" class="me-2">US</option>
                   <option value="IN"><img src="assets/img/india.png" alt="india" srcset="" class="me-2">IN</option>
                   <option value="UK"><img src="assets/img/uk.png" alt="uk" srcset="" class="me-2">UK</option>
@@ -1008,7 +1079,7 @@ $conn->close();
               </video>
               <div class="card-body">
                 <h5 class="card-title">Dhruvil</h5>
-                <p class="card-text">New York, USA</p>
+                <p class="card-text">Birmingham, UK</p>
                 <p class="card-text">
                   <span>"GoGo Trips made my Ahmedabad–Birmingham flight booking simple, transparent, and within budget. Henish Patel’s support and updates were excellent. I highly recommend them!"</span>
                 </p>
@@ -1115,76 +1186,46 @@ $conn->close();
     <div class="footer-newsletter">
       <div class="container">
         <div class="row justify-content-center text-center">
-          <div class="newsletter-card">
-            <img src="assets/img/subscribe.png" alt="">
-              <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-                  <input type="email" class="newsletter-input" placeholder="name@email.com" name="email">
-                  <input class="btn btn-danger newsletter-btn" type="submit" value="Subscribe">
-              </form>
-          </div>
-          <!-- <div class="col-lg-6">
-            <h4>Never Miss a Fare Deal to India</h4>
-            <p>Sign up for flash offers, discounts & fare drops.</p>
-            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-              <input type="text" name="type" value="subscribe" hidden>
-              <div class="newsletter-form">
-                <input type="email" placeholder="name@email.com" name="email">
-                <input type="submit" value="Subscribe">
+            <section class="newsletter-vip">
+              <h2 class="text-white">Get Deals Before Anyone Else!</h2>
+              <p>Join our VIP list and unlock early access to flash sales, special fares, and exclusive flight offers.</p>
+              <div class="vip-tags">
+                <span>VIP Price Alerts</span>
+                <span>Exclusive Discounts</span>
+                <span>24/7 Priority Support</span>
               </div>
-            </form>
-          </div> -->
+              <form class="news-form">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <input class="btn btn-danger newsletter-btn" type="submit" value="Join the VIP List">
+              </form>
+            </section>
         </div>
       </div>
     </div>
     <div class="bg-primary text-white">
       <div class="container footer-top">
         <div class="row gy-4">
-          <div class="col-lg-8 mx-auto">
-            <div class="row justify-content-between mb-4 gy-4">
-              <div class="col-md-12 col-9 mx-auto">
-                <a href="#" class="d-flex align-items-center">
-                  <!-- <span class="sitename">Arsha</span> -->
-                  <img src="assets/img/logo.png" alt="" srcset="" width="150" class="mx-auto">
-                </a>
+          <div class="col-md-4">
+              <a href="#" class="d-flex align-items-center">
+                <!-- <span class="sitename">Arsha</span> -->
+                <img src="assets/img/logo.png" alt="" srcset="" width="150" class="mx-auto">
+              </a>
+          </div>
+          <div class="col-md-4">
                 <p class="text-center mt-2"><strong>Address:</strong> 8 The Green, Suite B,</p>
                 <p class="text-center">Dover,Delaware -19901</p>
                 <p class="mt-3 text-center"><strong>Phone:</strong><a href="tel:+1 (229) 329-1796" class="text-white"> +1 (229) 329-1796</a></p>
                 <p class="mt-3 text-center"><strong>WhatsApp:</strong><a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="text-white"> +1954-347-5414</a></p>
                 <!-- <p class="mt-3 text-center"><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p> -->
                 <p class="mt-3 text-center"><strong>Email:</strong><a href="mailto:?subject=Hello&body=Hi%20there!" class="text-white"><span> info@gogotripsus.com</span></a></p>
-              </div>
-              <div class="col-lg-12  footer-links ">
-                <!-- <h4>Useful Links</h4> -->
-                <ul class="d-flex justify-content-center">
-                  <li class="me-4"> <a href="#" class="text-white">Terms and conditions</a></li>
-                  <li class="me-4"> <a href="#" class="text-white">Privacy Policy</a></li>
-                  <li class="me-4"> <a href="#" class="text-white">Return Policy</a></li>
-
-                </ul>
-
-              </div>
-            </div>
           </div>
-
-
-          <!-- <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Affordable</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Last Minute</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Business Class</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">First Class</a></li>
-          </ul>
-        </div> -->
-
-          <!-- <div class="col-lg-4 col-md-12">
-          <h4>Follow Us</h4>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam esse mollitia sapiente. Nisi mollitia in
-            reprehenderit optio nam culpa quidem, reiciendis odit blanditiis totam nihil iure vel corporis dolorum
-            ducimus!</p>
-          
-        </div> -->
-
+          <div class="col-md-4 footer-links">
+              <h5 class="text-white">Quick Links</h5>
+              <ul class="d-flex flex-column gap-3">
+                <li> <a href="https://gogotripsus.com/terms-conditions/" class="text-white">Terms and conditions</a></li>
+                <li> <a href="https://gogotripsus.com/privacy-policy/" class="text-white">Privacy Policy</a></li>
+              </ul>
+          </div>
         </div>
       </div>
 
