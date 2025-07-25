@@ -536,10 +536,12 @@ h6 {
   /* padding-bottom: 50px; */
   position: relative;
 }
-
+.footer-logo img {
+    max-width: 150px;
+}
 .footer .footer-newsletter {
   background-color: color-mix(in srgb, var(--heading-color), transparent 95%);
-  padding: 50px 0;
+  padding: 0 0;
 }
 
 .footer .footer-newsletter h4 {

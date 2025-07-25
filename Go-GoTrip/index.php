@@ -267,7 +267,7 @@ $conn->close();
     .newsletter-vip {
       max-width: 700px;
       margin: 25px auto;
-      padding: 20px 15px;
+      padding: 40px 15px;
       background: #102770;
       border-radius: 10px;
       text-align: center;
@@ -1194,7 +1194,7 @@ $conn->close();
                 <span>Exclusive Discounts</span>
                 <span>24/7 Priority Support</span>
               </div>
-              <form class="news-form">
+              <form class="news-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                 <input type="email" name="email" placeholder="Enter your email" required>
                 <input class="btn btn-danger newsletter-btn" type="submit" value="Join the VIP List">
               </form>
@@ -1206,9 +1206,9 @@ $conn->close();
       <div class="container footer-top">
         <div class="row gy-4">
           <div class="col-md-4">
-              <a href="#" class="d-flex align-items-center">
+              <a href="#" class="d-flex justify-content-center align-items-center">
                 <!-- <span class="sitename">Arsha</span> -->
-                <img src="assets/img/logo.png" alt="" srcset="" width="150" class="mx-auto">
+                <img src="assets/img/logo.png" alt="" srcset="" width="200" height="150" class="mx-auto">
               </a>
           </div>
           <div class="col-md-4">
@@ -1217,10 +1217,15 @@ $conn->close();
                 <p class="mt-3 text-center"><strong>Phone:</strong><a href="tel:+1 (229) 329-1796" class="text-white"> +1 (229) 329-1796</a></p>
                 <p class="mt-3 text-center"><strong>WhatsApp:</strong><a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="text-white"> +1954-347-5414</a></p>
                 <!-- <p class="mt-3 text-center"><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p> -->
-                <p class="mt-3 text-center"><strong>Email:</strong><a href="mailto:?subject=Hello&body=Hi%20there!" class="text-white"><span> info@gogotripsus.com</span></a></p>
+                <p class="mt-3 text-center">
+                  <strong>Email:</strong>
+                  <a href="mailto:info@gogotripsus.com?subject=Travel Inquiry" class="text-white">
+                  <span> info@gogotripsus.com</span>
+                  </a>
+                </p>
           </div>
-          <div class="col-md-4 footer-links">
-              <h5 class="text-white">Quick Links</h5>
+          <div class="col-md-4 footer-links d-flex flex-column align-items-center">
+              <h5 class="text-white mb-3">Quick Links</h5>
               <ul class="d-flex flex-column gap-3">
                 <li> <a href="https://gogotripsus.com/terms-conditions/" class="text-white">Terms and conditions</a></li>
                 <li> <a href="https://gogotripsus.com/privacy-policy/" class="text-white">Privacy Policy</a></li>
