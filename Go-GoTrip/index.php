@@ -125,6 +125,7 @@ $username = "root";
 $password = "";
 $dbname = "ggtrips";
 
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
@@ -229,6 +230,9 @@ $conn->close();
 
 
   <style>
+    .step-icon img{
+      height: 100%;
+    }
     .testimonial-section {
       padding: 60px 20px;
       background-color: #f5f6f8;
@@ -260,6 +264,31 @@ $conn->close();
     .swiper-button-prev {
       color: #000;
     }
+    .newsletter-card{
+      position: relative;
+      max-width:700px;
+    }
+    .newsletter-card img{
+      width: 100%;
+      height: 100%;
+    }
+    .newsletter-input {
+        border-radius: 10px;
+        height: 10%;
+        width: 43%;
+        position: absolute;
+        top: 47%;
+        right: 10%;
+     }
+    .newsletter-btn {
+        height: 10%;
+        width: 22%;
+        position: absolute;
+        top: 60%;
+        right: 21%;
+        font-size:1.1vw;
+    }
+
 
     iframe,
     video {
@@ -269,6 +298,9 @@ $conn->close();
     }
 
     @media (min-width: 768px) {
+      .newsletter-card{
+
+      }
 
       iframe,
       video {
@@ -429,7 +461,7 @@ $conn->close();
                 <div class="contact-icons mt-3">
                   <a href="tel:+1 229 329-1796" class="me-3 fs-3"><i
                       class="bi bi-telephone-fill call-icon me-2"></i>Call</a>
-                  <a href="https://wa.link/kvj0ei" class="fs-3"><i class="bi bi-whatsapp whatsapp-icon"></i>WhatsApp</a>    
+                  <a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="fs-3"><i class="bi bi-whatsapp whatsapp-icon"></i>WhatsApp</a>    
                 </div>
               </div>
             </div>
@@ -613,7 +645,7 @@ $conn->close();
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Advisory help for booking</h2>
+        <h2>SUPPORT FROM TICKET TO TAKEOFF</h2>
 
       </div><!-- End Section Title -->
 
@@ -625,34 +657,34 @@ $conn->close();
             <div class="d-flex overflow-x-auto white-space-nowrap">
 
               <div class=" step-wrapper mb-4">
-                <div class="step-icon"><i class="bi bi-calendar2-week"></i></div>
+                <div class="step-icon"><img src="assets/img/stepper1.png" alt=""></div>
                 <div class="text-center">
-                  <div class="step-title">Step 1</div>
-                  <p class="mb-0">Select trip type and travel dates.<br>(Round Trip, One Way)</p>
+                  <div class="step-title">Step 1 - Instant Ticket Confirmation</div>
+                  <p class="mb-0">Your booking is secured within minutes! <br> E-tickets are sent instantly to your email <br> and WhatsApp for a smooth start.</p>
                 </div>
               </div>
 
               <div class=" step-wrapper mb-4">
-                <div class="step-icon"><i class="bi bi-person-lines-fill"></i></div>
+                <div class="step-icon"><img src="assets/img/stepper2.png" alt=""></div>
                 <div class="text-center">
-                  <div class="step-title">Step 2</div>
-                  <p class="mb-0">Choose your route: USA → India.<br>Fill in your name, email & phone.</p>
+                  <div class="step-title">Step 2 - Personalized Travel Setup</div>
+                  <p class="mb-0">We handle seat preferences, meal choices, <br> extra baggage, wheelchair assistance, <br> and special requests to make your journey comfortable.</p>
                 </div>
               </div>
 
               <div class=" step-wrapper mb-4">
-                <div class="step-icon"><i class="bi bi-mouse"></i></div>
+                <div class="step-icon"><img src="assets/img/stepper3.png" alt=""></div>
                 <div class="text-center">
-                  <div class="step-title">Step 3</div>
-                  <p class="mb-0">Click “Get My Quote Now.”<br>Our advisor will contact you shortly.</p>
+                  <div class="step-title">Step 3 - Real-Time Updates & Alerts</div>
+                  <p class="mb-0">Get live flight tracking, gate change notifications,<br>delay alerts, and check-in reminders – always on time.</p>
                 </div>
               </div>
 
               <div class=" step-wrapper mb-4">
-                <div class="step-icon"><i class="bi bi-whatsapp"></i></div>
+                <div class="step-icon"><img src="assets/img/stepper4.png" alt=""></div>
                 <div class="text-center">
-                  <div class="step-title">Step 4</div>
-                  <p class="mb-0">Check your email or WhatsApp<br>Pick your best deal and book.</p>
+                  <div class="step-title">Step 4 - 24/7 Boarding & Travel Support</div>
+                  <p class="mb-0">Our team is on WhatsApp or call round-the-clock<br>to assist with last-minute needs or travel queries.</p>
                 </div>
               </div>
 
@@ -842,56 +874,65 @@ $conn->close();
 
         <div class="row gy-4">
 
+
           <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="100">
             <div class="service-item h-100 w-100 position-relative">
+              <div class="icon"><i class="bi bi-building icon"></i></div>
+              <h4>Offices in USA & India</h4>
+              <p class="d-md-block d-none">On-ground teams in both countries for reliable, real-time assistance from
+                booking to boarding.</p>
+            </div>
+          </div>        
+          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item h-100 w-100 position-relative">
               <div class="icon"><i class="bi bi-award icon"></i></div>
-              <h4><a href="" class="stretched-link">Trusted USA–India Travel Experts</a></h4>
+              <h4>Trusted USA–India Travel Experts</h4>
               <p class="d-md-block d-none"> We help Indian families, students, and professionals with personalized care — from finding the best fares to seamless booking.</p>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="300">
             <div class="service-item h-100 w-100 position-relative">
               <div class="icon"><i class="bi bi-currency-dollar icon"></i></div>
-              <h4><a href="" class="stretched-link">Unbeatable USA → India Fares from $999*</a></h4>
+              <h4>Unbeatable USA → India Fares from $999*</h4>
               <p class="d-md-block d-none">We specialize in long-haul routes with exclusive, unpublished round-trip
                 deals you won’t find online.
               </p>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="400">
             <div class="service-item h-100 w-100 position-relative">
               <div class="icon"><i class="bi bi-globe icon"></i></div>
-              <h4><a href="" class="stretched-link">Global Reach & Airline Partnerships</a></h4>
+              <h4>Global Reach & Airline Partnerships</h4>
               <p class="d-md-block d-none">With ties across 50+ countries, we unlock special fares through direct
                 airline relationships.</p>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="500">
             <div class="service-item h-100 w-100 position-relative">
               <div class="icon"><i class="bi bi-tag icon"></i></div>
-              <h4><a href="" class="stretched-link">Lowest Price Guarantee</a></h4>
+              <h4>Lowest Price Guarantee</h4>
               <p class="d-md-block d-none">Found a cheaper fare online? Send a screenshot — we’ll beat it, no questions
                 asked.</p>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="500">
+          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="600">
             <div class="service-item h-100 w-100 position-relative">
               <div class="icon"><i class="bi bi-headset icon"></i></div>
-              <h4><a href="" class="stretched-link">24/7 Human Support — In Your Language</a></h4>
+              <h4>24/7 Human Support — In Your Language</h4>
               <p class="d-md-block d-none">Call or WhatsApp real agents anytime. No IVR, no bots. We speak English,
                 Hindi, Gujarati, Tamil,Telugu
                 & more.</p>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="600">
+          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="700">
             <div class="service-item h-100 w-100 position-relative">
               <div class="icon"><i class="bi bi-calendar-check icon"></i></div>
-              <h4><a href="" class="stretched-link">Change Plans Anytime, Your Way</a></h4>
+              <h4>Change Plans Anytime, Your Way</h4>
               <p class="d-md-block d-none">Need to reschedule or customize your trip? We’ll handle it quickly and
                 stress-free — perfect for
                 students, senior citizens, family trips, group getaways, and business flyers.
@@ -899,23 +940,15 @@ $conn->close();
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="700">
+          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="800">
             <div class="service-item h-100 w-100 position-relative">
               <div class="icon"><i class="bi bi-bag-check icon"></i></div>
-              <h4><a href="" class="stretched-link">Extra Baggage Help</a></h4>
+              <h4>Extra Baggage Help</h4>
               <p class="d-md-block d-none">We help you understand baggage rules and get discounted extra luggage options
                 to save more.</p>
             </div>
           </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="800">
-            <div class="service-item h-100 w-100 position-relative">
-              <div class="icon"><i class="bi bi-building icon"></i></div>
-              <h4><a href="" class="stretched-link">Offices in USA & India</a></h4>
-              <p class="d-md-block d-none">On-ground teams in both countries for reliable, real-time assistance from
-                booking to boarding.</p>
-            </div>
-          </div><!-- End Service Item -->
+          <!-- End Service Item -->
 
         </div>
 
@@ -1082,7 +1115,14 @@ $conn->close();
     <div class="footer-newsletter">
       <div class="container">
         <div class="row justify-content-center text-center">
-          <div class="col-lg-6">
+          <div class="newsletter-card">
+            <img src="assets/img/subscribe.png" alt="">
+              <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                  <input type="email" class="newsletter-input" placeholder="name@email.com" name="email">
+                  <input class="btn btn-danger newsletter-btn" type="submit" value="Subscribe">
+              </form>
+          </div>
+          <!-- <div class="col-lg-6">
             <h4>Never Miss a Fare Deal to India</h4>
             <p>Sign up for flash offers, discounts & fare drops.</p>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
@@ -1092,7 +1132,7 @@ $conn->close();
                 <input type="submit" value="Subscribe">
               </div>
             </form>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -1109,7 +1149,7 @@ $conn->close();
                 <p class="text-center mt-2"><strong>Address:</strong> 8 The Green, Suite B,</p>
                 <p class="text-center">Dover,Delaware -19901</p>
                 <p class="mt-3 text-center"><strong>Phone:</strong><a href="tel:+1 (229) 329-1796" class="text-white"> +1 (229) 329-1796</a></p>
-                <p class="mt-3 text-center"><strong>WhatsApp:</strong><a href="https://wa.me/?text=Hello%20there!" class="text-white"> +1954-347-5414</a></p>
+                <p class="mt-3 text-center"><strong>WhatsApp:</strong><a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="text-white"> +1954-347-5414</a></p>
                 <!-- <p class="mt-3 text-center"><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p> -->
                 <p class="mt-3 text-center"><strong>Email:</strong><a href="mailto:?subject=Hello&body=Hi%20there!" class="text-white"><span> info@gogotripsus.com</span></a></p>
               </div>
@@ -1149,12 +1189,6 @@ $conn->close();
       </div>
 
       <div class="container copyright text-center ">
-        <div class="social-links d-flex justify-content-center mb-4">
-          <!-- <a href="https://x.com/gogotrips_us"><i class="bi bi-twitter-x"></i></a> -->
-          <a href="https://www.facebook.com/gogotrips.us"><i class="bi bi-facebook"></i></a>
-          <a href="https://www.instagram.com/gogotripsusa/"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.linkedin.com/company/gogotrips-us/"><i class="bi bi-linkedin"></i></a>
-        </div>
         <p>© <span>Copyright</span> <strong class="px-1 sitename">GoGoTrips</strong> <span>All Rights Reserved</span></p>
         <div class="credits">
 
