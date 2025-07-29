@@ -8,8 +8,8 @@ class EmailConfig
   const SMTP_PASSWORD = 'irxl bnrs vmiv asky';
   const FROM_EMAIL = 'coopermath1@gmail.com';
   const FROM_NAME = 'Go GO Trips';
-  const TO_EMAIL = 'info@gogotripsus.com';
-  // const TO_EMAIL = 'kunj@savitarainfotel.in';
+  // const TO_EMAIL = 'info@gogotripsus.com';
+  const TO_EMAIL = 'kunj@savitarainfotel.in';
 }
 
 // Include PHPMailer classes
@@ -40,7 +40,8 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 // Centralized email sending function
-function sendEmail($formData, $type) {
+function sendEmail($formData, $type)
+{
   $mail = new PHPMailer(true);
   try {
     // Server settings
@@ -67,30 +68,31 @@ function sendEmail($formData, $type) {
 
     if ($type === 'quote') {
       $body .= "<p><strong>Type:</strong> " . $type . "</p>";
-        $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
-        $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
-        $altBody .= "Email: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\n";
-    }else if($type === 'subscribe'){
+      $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
+      $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
+      $altBody .= "Email: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\n";
+    } else if ($type === 'subscribe') {
       $body .= "<p><strong>Type:</strong> " . $type . "</p>";
-       $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
-       $body .= "<p><strong>Phone:</strong> " . htmlspecialchars($formData['phone']) . "</p>";
-       $altBody .= "Email: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\n";
-    }else if($type === 'discount'){
-       $body .= "<p><strong>Type:</strong> " . $type . "</p>";
-       $body .= "<p><strong>Country:</strong> " . htmlspecialchars($formData['country']) . "</p>";
-       $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
-        $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
-       $altBody .= "Email: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\n";
-    }else {
-        $body .= "<p><strong>Trip Type:</strong> " . htmlspecialchars($type) . "</p>";
-        $body .= "<p><strong>Name:</strong> " . htmlspecialchars($formData['full_name']) . "</p>";
-        $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
-        $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
-        $body .= "<p><strong>Departure Date:</strong> " . htmlspecialchars($formData['departure_date']) . "</p>";
-        $body .= "<p><strong>Arrival Date:</strong> " . htmlspecialchars($formData['arrival_date']) . "</p>";
-        $body .= "<p><strong>Departure Place:</strong> " . htmlspecialchars($formData['departure_place']) . "</p>";
-        $body .= "<p><strong>Arrival Place:</strong> " . htmlspecialchars($formData['arrival_place']) . "</p>";
-        $altBody .= "Trip Type: " . $type . "\nName: " . $formData['full_name'] . "\nEmail: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\nDeparture Date: " . $formData['departure_date'] . "\nArrival Date: " . $formData['arrival_date'] . "\nDeparture Place: " . $formData['departure_place'] . "\nArrival Place: " . $formData['arrival_place'] . "\n";
+      $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
+      $body .= "<p><strong>Name:</strong> " . htmlspecialchars($formData['full_name']) . "</p>";
+      $altBody .= "Email: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\n";
+    } else if ($type === 'discount') {
+      $body .= "<p><strong>Type:</strong> " . $type . "</p>";
+      $body .= "<p><strong>Country:</strong> " . htmlspecialchars($formData['country']) . "</p>";
+      $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
+      $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
+      $altBody .= "Email: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\n";
+    } else {
+      $body .= "<p><strong>Trip Type:</strong> " . htmlspecialchars($type) . "</p>";
+      $body .= "<p><strong>Name:</strong> " . htmlspecialchars($formData['full_name']) . "</p>";
+      $body .= "<p><strong>Email:</strong> " . htmlspecialchars($formData['email']) . "</p>";
+      $body .= "<p><strong>Phone:</strong> +1" . htmlspecialchars($formData['phone']) . "</p>";
+      $body .= "<p><strong>Departure Date:</strong> " . htmlspecialchars($formData['departure_date']) . "</p>";
+      $body .= "<p><strong>Arrival Date:</strong> " . htmlspecialchars($formData['arrival_date']) . "</p>";
+      $body .= "<p><strong>Departure Place:</strong> " . htmlspecialchars($formData['departure_place']) . "</p>";
+      $body .= "<p><strong>Arrival Place:</strong> " . htmlspecialchars($formData['arrival_place']) . "</p>";
+      $body .= "<p><strong>Message:</strong> " . $formData['details'] . "</p>";
+      $altBody .= "Trip Type: " . $type . "\nName: " . $formData['full_name'] . "\nEmail: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\nDeparture Date: " . $formData['departure_date'] . "\nArrival Date: " . $formData['arrival_date'] . "\nDeparture Place: " . $formData['departure_place'] . "\nArrival Place: " . $formData['arrival_place'] . "\n";
     }
     $body .= "<p><strong>Time:</strong> " . date('Y-m-d H:i:s') . "</p>";
     $altBody .= "Time: " . date('Y-m-d H:i:s') . "\n";
@@ -117,6 +119,7 @@ $formData = [
   'departure_place' => '',
   'arrival_place' => '',
   'phone' => '',
+  'details' => '',
 ];
 
 // Database connection
@@ -125,6 +128,10 @@ $username = "root";
 $password = "";
 $dbname = "ggtrips";
 
+// $servername = "localhost";
+// $username = "u888973765_gogotripsus";
+// $password = "Sau@2505";
+// $dbname = "u888973765_gogotripsus";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -141,25 +148,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt = $conn->prepare("INSERT INTO inquiries (type, email, phone) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $type, $formData['email'], $formData['phone']);
-  } else if($type === 'discount'){
+  } else if ($type === 'discount') {
     $formData['email'] = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
     $formData['phone'] = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING));
     $formData['country'] = trim(filter_input(INPUT_POST, 'country', FILTER_SANITIZE_STRING));
 
     $stmt = $conn->prepare("INSERT INTO inquiries (type, email, phone, country) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $type, $formData['email'], $formData['phone'], $formData['country']);
-  }else if($type === 'subscribe'){
-      $formData['email'] = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
+  } else if ($type === 'subscribe') {
+    $formData['email'] = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
 
-      $stmt = $conn->prepare("INSERT INTO inquiries (type, email) VALUES (?, ?)");
-      $stmt->bind_param("ss", $type, $formData['email']);
-  }else {
+    $stmt = $conn->prepare("INSERT INTO inquiries (type, email) VALUES (?, ?)");
+    $stmt->bind_param("ss", $type, $formData['email']);
+  } else {
     $formData['full_name'] = trim(filter_input(INPUT_POST, 'full_name', FILTER_SANITIZE_STRING));
     $formData['email'] = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
     $formData['departure_date'] = trim(filter_input(INPUT_POST, 'departure_date', FILTER_SANITIZE_STRING));
     $formData['arrival_date'] = trim(filter_input(INPUT_POST, 'arrival_date', FILTER_SANITIZE_STRING));
     $formData['departure_place'] = trim(filter_input(INPUT_POST, 'departure_place', FILTER_SANITIZE_STRING));
     $formData['phone'] = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING));
+    $formData['details'] = trim(filter_input(INPUT_POST, 'details', FILTER_SANITIZE_STRING));
 
     if ($type === 'round-trip') {
       $multiArrival = $_POST['arrival_place'] ?? [];
@@ -188,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $toastr_message = "Error: " . $stmt->error;
     $toastr_type = "error";
   }
-
+  header("Location: https://gogotripsus.com/thank-you"); // Redirect to a thank you page
   $stmt->close();
 }
 
@@ -198,11 +206,28 @@ $conn->close();
 <html lang="en">
 
 <head>
+  <script>
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MXM8KC7M');
+  </script>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Go-Gotrips</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>Book Usa To India Air Ticket | Gogo Trips US</title>
+  <meta name="description" content="Usa–India Fares From $999* — Personalized Quotes, Guaranteed Low Rates. Get 3 Best Fare Options In Just 10 Minutes." />
+  <link rel="canonical" href="https://gogotripsus.com/flight-booking/" />
+
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -230,9 +255,10 @@ $conn->close();
 
 
   <style>
-    .step-icon img{
+    .step-icon img {
       height: 100%;
     }
+
     .testimonial-section {
       padding: 60px 20px;
       background-color: #f5f6f8;
@@ -264,103 +290,162 @@ $conn->close();
     .swiper-button-prev {
       color: #000;
     }
+
     .newsletter-vip {
-      max-width: 700px;
-      margin: 25px auto;
-      padding: 40px 15px;
-      background: #102770;
-      border-radius: 10px;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px 25px;
+      background: linear-gradient(135deg, #102770, #1d3a8a);
+      border-radius: 12px;
       text-align: center;
       color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       position: relative;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
     }
+
+    /* Top Right Airplane */
     .newsletter-vip::after {
       content: "";
-      background: url('https://img.icons8.com/ios-filled/100/ffffff/airplane-take-off.png') no-repeat;
-      opacity: 0.1;
-      background-size: 60px;
       position: absolute;
-      right: 10px;
-      top: 10px;
-      width: 60px;
-      height: 60px;
+      top: 15px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      background: url('https://img.icons8.com/ios-filled/100/ffffff/airplane-take-off.png') no-repeat center;
+      background-size: contain;
+      opacity: 0.2;
+      animation: fly 4s ease-in-out infinite alternate;
     }
+
+    /* Bottom Left Airplane */
+    .newsletter-vip::before {
+      content: "";
+      position: absolute;
+      bottom: 15px;
+      left: 20px;
+      width: 80px;
+      height: 80px;
+      background: url('https://img.icons8.com/ios-filled/100/ffffff/airplane-take-off.png') no-repeat center;
+      background-size: contain;
+      opacity: 0.2;
+      transform: rotate(180deg);
+      animation: fly 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.2;
+      }
+
+      50% {
+        transform: translateY(-5px) rotate(0deg);
+        opacity: 0.4;
+      }
+
+      100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.2;
+      }
+    }
+
     .newsletter-vip h2 {
-      font-size: 22px;
+      font-size: 30px;
       font-weight: 700;
-      margin: 0 0 8px;
+      margin-bottom: 10px;
     }
+
     .newsletter-vip p {
-      font-size: 13px;
-      margin: 0 0 15px;
+      font-size: 16px;
+      margin-bottom: 20px;
       color: #e0e0e0;
     }
+
     .vip-tags {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 20px;
     }
+
     .vip-tags span {
-      font-size: 11px;
+      font-size: 13px;
       background: #e91e63;
-      padding: 3px 8px;
-      border-radius: 10px;
-      color: #fff;
+      padding: 5px 12px;
+      border-radius: 20px;
       font-weight: 500;
+      color: #fff;
     }
-    .news-form input{
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
+
     .newsletter-form {
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
     }
+
     .newsletter-form input {
-      padding: 8px 10px;
-      font-size: 12px;
-      border-radius: 5px;
+      padding: 12px 15px;
+      font-size: 14px;
+      border-radius: 6px;
       border: none;
       flex: 1;
-      min-width: 180px;
-      max-width: 260px;
+      min-width: 250px;
+      max-width: 320px;
     }
+
     .newsletter-form button {
-      padding: 8px 16px;
-      font-size: 12px;
+      padding: 12px 20px;
+      font-size: 14px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       background-color: #e91e63;
       color: #fff;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.3s ease;
     }
+    .news-form input{
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+
     .newsletter-form button:hover {
       background-color: #c2185b;
     }
+
+    .footer-logo img {
+      width: 150px;
+      height: 180px;
+    }
+
     @media (max-width: 480px) {
       .newsletter-vip {
         padding: 15px 10px;
       }
+
       .newsletter-vip h2 {
         font-size: 18px;
       }
+
       .newsletter-vip p {
         font-size: 12px;
       }
+
       .newsletter-form {
         flex-direction: column;
         align-items: center;
       }
-      .newsletter-form input, .newsletter-form button {
+
+      .newsletter-form input,
+      .newsletter-form button {
         width: 100%;
         max-width: none;
+      }
+      .newsletter-btn{
+        margin-top: 10px;
       }
     }
 
@@ -373,6 +458,7 @@ $conn->close();
     }
 
     @media (min-width: 768px) {
+
       iframe,
       video {
         height: 300px;
@@ -382,6 +468,8 @@ $conn->close();
 </head>
 
 <body class="index-page">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MXM8KC7M"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
@@ -417,7 +505,7 @@ $conn->close();
       </nav>
       <div class="order-2">
         <span class="text-white me-2 d-md-inline-block d-none"><a href="tel:+1 (229) 329-1796" class="text-white">📞 +1 (229) 329-1796</a></span>
-        <a class="btn-getstarted" href="#" data-bs-toggle="modal" data-bs-target="#voucherModal">Get 10% Off Now</a>
+        <a class="btn-getstarted" id="scrollTopBtn" href="#">Get 10% Off Now</a>
       </div>
 
     </div>
@@ -532,7 +620,7 @@ $conn->close();
                 <div class="contact-icons mt-3">
                   <a href="tel:+1 229 329-1796" class="me-3 fs-3"><i
                       class="bi bi-telephone-fill call-icon me-2"></i>Call</a>
-                  <a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="fs-3"><i class="bi bi-whatsapp whatsapp-icon"></i>WhatsApp</a>    
+                  <a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="fs-3"><i class="bi bi-whatsapp whatsapp-icon"></i>WhatsApp</a>
                 </div>
               </div>
             </div>
@@ -540,9 +628,9 @@ $conn->close();
           </div>
           <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
             <!-- Trip Type Selector -->
-             <div class="text-center">
-               <h2 class="mb-2 fs-1">24/7 Urgent Booking Available</h2>
-             </div>
+            <div class="text-center">
+              <h2 class="mb-2 fs-1">24/7 Urgent Booking Available</h2>
+            </div>
             <div class="mb-3 text-center">
               <div class="form-check form-check-inline">
                 <input class="form-check-input fs-4" type="radio" name="trip_type" id="roundTrip" value="Round Trip" checked />
@@ -591,6 +679,9 @@ $conn->close();
                   <div class="col-md-6">
                     <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required />
                   </div>
+                  <div class="col-md-12">
+                    <textarea class="form-control mb-2" name="details" value="" placeholder="Additional Information" rows="2" col="3"></textarea>
+                  </div>
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn-get-started">Get Your Fare In 10 Minutes</button>
@@ -604,42 +695,45 @@ $conn->close();
                 <input name="type" class="form-control" value="one-trip" hidden />
                 <!-- Departure Date Only -->
                 <div class="row g-2 mb-3">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <input type="date" name="departure_date" class="form-control" required />
                   </div>
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                     <input type="date" name="arrival_date" class="form-control" required />
                   </div>
-                </div>
-                <!-- Single Route -->
-                <div class="row g-2 mb-3">
-                  <div class="col-md-6">
-                    <input type="text" name="departure_place" placeholder="Departure place" class="form-control" required />
+                </div> -->
+                  <!-- Single Route -->
+                  <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                      <input type="text" name="departure_place" placeholder="Departure place" class="form-control" required />
+                    </div>
+                    <div class="col-md-6">
+                      <input type="text" name="arrival_place" placeholder="Arrival place" class="form-control" required />
+                    </div>
                   </div>
-                  <div class="col-md-6">
-                    <input type="text" name="arrival_place" placeholder="Arrival place" class="form-control" required />
+                  <!-- Traveler Info -->
+                  <div class="row g-2 mb-3">
+                    <div class="col-md-12">
+                      <input type="text" class="form-control mb-2" name="full_name" placeholder="Full Name" required />
+                    </div>
+                    <div class="col-md-6">
+                      <input type="email" class="form-control mb-2" name="email" placeholder="Email Address" required />
+                    </div>
+                    <div class="col-md-6">
+                      <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required />
+                    </div>
+                    <div class="col-md-12">
+                      <textarea class="form-control mb-2" name="details" value="" placeholder="Additional Information" ></textarea>
+                    </div>
                   </div>
-                </div>
-                <!-- Traveler Info -->
-                <div class="row g-2 mb-3">
-                  <div class="col-md-12">
-                    <input type="text" class="form-control mb-2" name="full_name" placeholder="Full Name" required />
+                  <div class="text-center">
+                    <button type="submit" class="btn-get-started">Get Your Fare In 10 Minutes</button>
                   </div>
-                  <div class="col-md-6">
-                    <input type="email" class="form-control mb-2" name="email" placeholder="Email Address" required />
-                  </div>
-                  <div class="col-md-6">
-                    <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required />
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn-get-started">Get Your Fare In 10 Minutes</button>
-                </div>
               </form>
             </div>
 
             <!-- Multi-City Form -->
-        
+
 
             <div class="mt-4 text-sm text-center">
               <p>24/7 Support | Zero IVR Wait | Our Team Is Always Here For You.</p>
@@ -953,7 +1047,7 @@ $conn->close();
               <p class="d-md-block d-none">On-ground teams in both countries for reliable, real-time assistance from
                 booking to boarding.</p>
             </div>
-          </div>        
+          </div>
           <div class="col-xl-3 col-6 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item h-100 w-100 position-relative">
               <div class="icon"><i class="bi bi-award icon"></i></div>
@@ -1049,7 +1143,9 @@ $conn->close();
                 <h5 class="card-title">Khushboo</h5>
                 <p class="card-text">New York, USA</p>
                 <p class="card-text">
-                  <span>"GoGo Trips gave me the best price compared to other websites. I highly recommend them!"</span>
+                  <span>"I booked my flight from JFK to Ahmedabad with GoGo Trip.
+                    They gave me the best price compared to other websites. Mohit was very helpful with the booking process.
+                    I highly recommend GoGo Trip!"</span>
                 </p>
               </div>
             </div>
@@ -1186,19 +1282,21 @@ $conn->close();
     <div class="footer-newsletter">
       <div class="container">
         <div class="row justify-content-center text-center">
-            <section class="newsletter-vip">
-              <h2 class="text-white">Get Deals Before Anyone Else!</h2>
-              <p>Join our VIP list and unlock early access to flash sales, special fares, and exclusive flight offers.</p>
-              <div class="vip-tags">
-                <span>VIP Price Alerts</span>
-                <span>Exclusive Discounts</span>
-                <span>24/7 Priority Support</span>
-              </div>
-              <form class="news-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-                <input type="email" name="email" placeholder="Enter your email" required>
-                <input class="btn btn-danger newsletter-btn" type="submit" value="Join the VIP List">
-              </form>
-            </section>
+          <section class="newsletter-vip">
+            <h2 class="text-white">Get Deals Before Anyone Else!</h2>
+            <p>Join our VIP list and unlock early access to flash sales, special fares, and exclusive flight offers.</p>
+            <div class="vip-tags">
+              <span>VIP Price Alerts</span>
+              <span>Exclusive Discounts</span>
+              <span>24/7 Priority Support</span>
+            </div>
+            <form class="news-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+              <input name="type" value="subscribe" hidden>
+              <input type="text" name="full_name" placeholder="Enter your name" required>
+              <input type="email" name="email" placeholder="Enter your email" required>
+              <input class="btn btn-danger newsletter-btn" type="submit" value="Join the VIP List">
+            </form>
+          </section>
         </div>
       </div>
     </div>
@@ -1206,30 +1304,30 @@ $conn->close();
       <div class="container footer-top">
         <div class="row gy-4">
           <div class="col-md-4">
-              <a href="#" class="d-flex justify-content-center align-items-center">
-                <!-- <span class="sitename">Arsha</span> -->
-                <img src="assets/img/logo.png" alt="" srcset="" width="200" height="150" class="mx-auto">
-              </a>
+            <a href="#" class="d-flex justify-content-center align-items-center footer-logo">
+              <!-- <span class="sitename">Arsha</span> -->
+              <img src="assets/img/logo-4.png" alt="" srcset="" class="mx-auto">
+            </a>
           </div>
           <div class="col-md-4">
-                <p class="text-center mt-2"><strong>Address:</strong> 8 The Green, Suite B,</p>
-                <p class="text-center">Dover,Delaware -19901</p>
-                <p class="mt-3 text-center"><strong>Phone:</strong><a href="tel:+1 (229) 329-1796" class="text-white"> +1 (229) 329-1796</a></p>
-                <p class="mt-3 text-center"><strong>WhatsApp:</strong><a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="text-white"> +1954-347-5414</a></p>
-                <!-- <p class="mt-3 text-center"><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p> -->
-                <p class="mt-3 text-center">
-                  <strong>Email:</strong>
-                  <a href="mailto:info@gogotripsus.com?subject=Travel Inquiry" class="text-white">
-                  <span> info@gogotripsus.com</span>
-                  </a>
-                </p>
+            <p class="text-center mt-2"><strong>Address:</strong> 8 The Green, Suite B,</p>
+            <p class="text-center">Dover,Delaware -19901</p>
+            <p class="mt-3 text-center"><strong>Phone:</strong><a href="tel:+1 (229) 329-1796" class="text-white"> +1 (229) 329-1796</a></p>
+            <p class="mt-3 text-center"><strong>WhatsApp:</strong><a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="text-white"> +1954-347-5414</a></p>
+            <!-- <p class="mt-3 text-center"><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p> -->
+            <p class="mt-3 text-center">
+              <strong>Email:</strong>
+              <a href="mailto:info@gogotripsus.com?subject=Travel Inquiry" class="text-white">
+                <span> info@gogotripsus.com</span>
+              </a>
+            </p>
           </div>
           <div class="col-md-4 footer-links d-flex flex-column align-items-center">
-              <h5 class="text-white mb-3">Quick Links</h5>
-              <ul class="d-flex flex-column gap-3">
-                <li> <a href="https://gogotripsus.com/terms-conditions/" class="text-white">Terms and conditions</a></li>
-                <li> <a href="https://gogotripsus.com/privacy-policy/" class="text-white">Privacy Policy</a></li>
-              </ul>
+            <h5 class="text-white mb-3">Quick Links</h5>
+            <ul class="d-flex flex-column gap-3">
+              <li> <a href="https://gogotripsus.com/terms-conditions/" class="text-white">Terms and conditions</a></li>
+              <li> <a href="https://gogotripsus.com/privacy-policy/" class="text-white">Privacy Policy</a></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -1267,9 +1365,9 @@ $conn->close();
   <script>
     let skillIndex = 0;
     document.addEventListener("DOMContentLoaded", function() {
-      
+
       if (window.history.replaceState) {
-          window.history.replaceState(null, null, window.location.href);
+        window.history.replaceState(null, null, window.location.href);
       }
 
       const roundTripRadio = document.getElementById("roundTrip");
@@ -1301,7 +1399,7 @@ $conn->close();
       // Event listeners
       roundTripRadio.addEventListener("change", toggleForms);
       oneWayRadio.addEventListener("change", toggleForms);
-      
+
 
       // Initialize view on load
       toggleForms();
@@ -1336,23 +1434,25 @@ $conn->close();
   </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-
-    // Get today's date in YYYY-MM-DD format
+    
+    document.getElementById('scrollTopBtn').addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
     const today = new Date().toISOString().split('T')[0];
-
-    // Select inputs using name attribute
     const departureInput = document.querySelector('input[name="arrival_date"]');
     const arrivalInput = document.querySelector('input[name="departure_date"]');
 
-
-    // Set min attribute for arrival to today
     arrivalInput.setAttribute('min', today);
 
-    // Update departure min date based on arrival date
+    
     arrivalInput.addEventListener('change', function() {
-        departureInput.setAttribute('min', arrivalInput.value);
+      departureInput.setAttribute('min', arrivalInput.value);
     });
     let modalShown = false;
 
@@ -1384,6 +1484,7 @@ $conn->close();
       });
     <?php endif; ?>
   </script>
+
 </body>
 
 </html>
