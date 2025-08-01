@@ -91,10 +91,8 @@ function sendEmail($formData, $type, $attachments)
       $body .= "<p><strong>Arrival Date:</strong> " . htmlspecialchars($formData['arrival_date']) . "</p>";
       $body .= "<p><strong>Departure Place:</strong> " . htmlspecialchars($formData['departure_place']) . "</p>";
       $body .= "<p><strong>Arrival Place:</strong> " . htmlspecialchars($formData['arrival_place']) . "</p>";
-      $body .= "<p><strong>Adult:</strong> " . htmlspecialchars($formData['adult']) . "</p>";
-      $body .= "<p><strong>Children:</strong> " . htmlspecialchars($formData['child']) . "</p>";
-      $body .= "<p><strong>Infant:</strong> " . htmlspecialchars($formData['infant']) . "</p>";
-      $body .= "<p><strong>Message:</strong> " . $formData['details'] . "</p>";
+      $body .= "<p><strong>Arrival Place:</strong> " . htmlspecialchars($formData['passengers']) . "</p>";
+      $body .= "<p><strong>Passengers:</strong> " . $formData['details'] . "</p>";
       $altBody .= "Trip Type: " . $type . "\nName: " . $formData['full_name'] . "\nEmail: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\nDeparture Date: " . $formData['departure_date'] . "\nArrival Date: " . $formData['arrival_date'] . "\nDeparture Place: " . $formData['departure_place'] . "\nArrival Place: " . $formData['arrival_place'] . "\n";
     }
     $body .= "<p><strong>Time:</strong> " . date('Y-m-d H:i:s') . "</p>";
@@ -129,6 +127,7 @@ $formData = [
   'adult' => '',
   'child' => '',
   'infant' => '',
+  'passengers' => '',
   'images' => '',
 ];
 
@@ -235,6 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $formData['departure_place'], 
         $formData['arrival_place'], 
         $formData['phone'], 
+        $formData['passengers'], 
         $formData['adult'],
         $formData['child'],
         $formData['infant'],
@@ -611,7 +611,6 @@ $conn->close();
           <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
             <input type="text" name="type" value="discount" hidden>
             <input type="email" name="email" class="form-control mb-2" placeholder="Your best email">
-            <span class="text-center  text-muted">AND/OR</span>
             <div class="input-group mb-2">
               <span class="input-group-text">
                 <select name="country" class="border-0 p-0">
@@ -659,7 +658,7 @@ $conn->close();
               <input type="email" name="email" class="form-control" placeholder="Email" required>
             </div>
             <div class="mb-2">
-              <span class="text-center text-muted">AND/OR</span>
+            
             </div>
             <div class="mb-3">
               <input type="tel" name="phone" class="form-control" placeholder="Phone" required>
@@ -752,7 +751,7 @@ $conn->close();
                     <input type="text" name="arrival_place[]" placeholder="Arrival place" class="form-control" required />
                   </div>
                 </div>
-                <div class="row mb-3">
+                <!-- <div class="row mb-3">
                   <div class="col-4">
                     <div class="form-control">
                         <div class="range-label">
@@ -780,13 +779,16 @@ $conn->close();
                         <span>Count: <span class="range-value" id="infantCount">0</span></span>                          
                       </div>
                   </div>
-                </div>
+                </div> -->
                 
                 <!-- Traveler Info -->
                 <div class="row g-2 mb-3">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <input type="text" class="form-control mb-2" name="full_name" placeholder="Full Name" required />
                   </div>
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" name="passengers" placeholder="Number Of Passengers" required />
+                  </div>                      
                   <div class="col-md-6">
                     <input type="email" class="form-control mb-2" name="email" placeholder="Email Address" required />
                   </div>
@@ -805,7 +807,10 @@ $conn->close();
                   <button type="submit" class="btn-get-started">Get Your Fare In 10 Minutes</button>
                 </div>
               </form>
-            </div>
+            <div class="mt-4 text-sm text-center">
+              <p>24/7 Support | Zero IVR Wait | Our Team Is Always Here For You.</p>
+            </div>              
+            </div>           
 
             <!-- One Way Form -->
             <div id="oneWayForm" style="display: none;">
@@ -821,7 +826,7 @@ $conn->close();
                   </div>
                 </div> -->
                   <!-- Single Route -->
-                  <div class="row g-2 mb-3">
+                  <div class="row g-2">
                     <div class="col-md-6">
                       <input type="text" name="departure_place" placeholder="Departure place" class="form-control" required />
                     </div>
@@ -830,7 +835,7 @@ $conn->close();
                     </div>
                   </div>
                   <!-- Traveler Info -->
-                   <div class="row">
+                   <!-- <div class="row">
                       <div class="col-4">
                         <div class="form-control">
                             <div class="range-label">
@@ -858,26 +863,26 @@ $conn->close();
                             <span>Count: <span class="range-value" id="infantCount">0</span></span>                          
                           </div>
                       </div>
-                    </div>
+                    </div> -->
                       <!-- Children Slider -->
            
 
                    
                   <div class="row g-2 mb-3">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                       <input type="text" class="form-control mb-2" name="full_name" placeholder="Full Name" required />
                     </div>
+                    <div class="col-md-6">
+                      <input type="number" class="form-control" name="passengers" placeholder="Number Of Passengers" required />
+                    </div>                    
                     <div class="col-md-6">
                       <input type="email" class="form-control mb-2" name="email" placeholder="Email Address" required />
                     </div>
                     <div class="col-md-6">
                       <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required />
                     </div>
-                    <div class="col-md-12">
-                      <input type="number" class="form-control" name="passengers" placeholder="Number Of Passengers" required />
-                    </div>
                     <div class="col-md-6">
-                        <label for="screen-shot">Screenshot</label>
+                        <label for="screen-shot">Upload Your Screenshot</label>
                         <input type="file" id="screen-shot" name="image">
                     </div>                    
                     <div class="col-md-6">
@@ -889,7 +894,6 @@ $conn->close();
                   </div>
               </form>
             </div>
-
             <!-- Multi-City Form -->
 
 
