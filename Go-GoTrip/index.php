@@ -40,7 +40,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 // Centralized email sending function
-function sendEmail($formData, $type)
+function sendEmail($formData, $type, $attachments)
 {
   $mail = new PHPMailer(true);
   try {
@@ -91,6 +91,9 @@ function sendEmail($formData, $type)
       $body .= "<p><strong>Arrival Date:</strong> " . htmlspecialchars($formData['arrival_date']) . "</p>";
       $body .= "<p><strong>Departure Place:</strong> " . htmlspecialchars($formData['departure_place']) . "</p>";
       $body .= "<p><strong>Arrival Place:</strong> " . htmlspecialchars($formData['arrival_place']) . "</p>";
+      $body .= "<p><strong>Adult:</strong> " . htmlspecialchars($formData['adult']) . "</p>";
+      $body .= "<p><strong>Children:</strong> " . htmlspecialchars($formData['child']) . "</p>";
+      $body .= "<p><strong>Infant:</strong> " . htmlspecialchars($formData['infant']) . "</p>";
       $body .= "<p><strong>Message:</strong> " . $formData['details'] . "</p>";
       $altBody .= "Trip Type: " . $type . "\nName: " . $formData['full_name'] . "\nEmail: " . $formData['email'] . "\nPhone: " . $formData['phone'] . "\nDeparture Date: " . $formData['departure_date'] . "\nArrival Date: " . $formData['arrival_date'] . "\nDeparture Place: " . $formData['departure_place'] . "\nArrival Place: " . $formData['arrival_place'] . "\n";
     }
@@ -99,6 +102,9 @@ function sendEmail($formData, $type)
 
     $mail->Body = $body;
     $mail->AltBody = $altBody;
+    if($attachments){
+      $mail->addAttachment('uploads/'.$attachments.'');
+    }
 
     $mail->send();
     return ['success' => true, 'message' => 'Email sent successfully!'];
@@ -120,6 +126,10 @@ $formData = [
   'arrival_place' => '',
   'phone' => '',
   'details' => '',
+  'adult' => '',
+  'child' => '',
+  'infant' => '',
+  'images' => '',
 ];
 
 // Database connection
@@ -138,9 +148,43 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $type = trim(filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING));
   $formData['type'] = $type;
+
+
+  //file upload logic
+  $targetDir = "uploads/";
+  $originalName = $_FILES["image"]["name"];
+  $imageTmp = $_FILES["image"]["tmp_name"];
+  $imageType = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+  $randomName = uniqid("img_", true) . "." . $imageType;
+  $targetFile = $targetDir . $randomName;
+  
+  // write logic for if files has a file only then code)
+  if ($_FILES["image"]) {
+      $formData['images'] = $randomName;
+  }else{  
+      $formData['images'] = '';
+  }
+
+  $check = getimagesize($imageTmp);
+  if ($check !== false) {
+      if (move_uploaded_file($imageTmp, $targetFile)) {
+          $toastr_message = "Image uploaded successfully as $randomName";
+          $toastr_type = "success";          
+          // Store in DB
+      } else {
+          $toastr_message = "Error uploading image.";
+          $toastr_type = "error";           
+      }
+  } else {
+      $toastr_message = "File is not an image.";
+      $toastr_type = "error";                   
+  }  
 
   if ($type === 'quote') {
     $formData['email'] = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
@@ -168,6 +212,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $formData['departure_place'] = trim(filter_input(INPUT_POST, 'departure_place', FILTER_SANITIZE_STRING));
     $formData['phone'] = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING));
     $formData['details'] = trim(filter_input(INPUT_POST, 'details', FILTER_SANITIZE_STRING));
+    $formData['adult'] = trim(filter_input(INPUT_POST, 'adult', FILTER_SANITIZE_STRING));
+    $formData['child'] = trim(filter_input(INPUT_POST, 'child', FILTER_SANITIZE_STRING));
+    $formData['infant'] = trim(filter_input(INPUT_POST, 'infant', FILTER_SANITIZE_STRING));
 
     if ($type === 'round-trip') {
       $multiArrival = $_POST['arrival_place'] ?? [];
@@ -178,8 +225,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $formData['arrival_place'] = trim(filter_input(INPUT_POST, 'arrival_place', FILTER_SANITIZE_STRING));
     }
 
-    $stmt = $conn->prepare("INSERT INTO inquiries (type, full_name, email, departure_date, arrival_date, departure_place, arrival_place, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssss", $type, $formData['full_name'], $formData['email'], $formData['departure_date'], $formData['arrival_date'], $formData['departure_place'], $formData['arrival_place'], $formData['phone']);
+    $stmt = $conn->prepare("INSERT INTO inquiries (type, full_name, email, departure_date, arrival_date, departure_place, arrival_place, phone, adult, child, infant, images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssssss",
+        $type,
+        $formData['full_name'],
+        $formData['email'],
+        $formData['departure_date'], 
+        $formData['arrival_date'], 
+        $formData['departure_place'], 
+        $formData['arrival_place'], 
+        $formData['phone'], 
+        $formData['adult'],
+        $formData['child'],
+        $formData['infant'],
+        $formData['images'],
+      );
   }
 
   if ($stmt->execute()) {
@@ -187,7 +247,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $toastr_type = "success";
 
     // Send email
-    $emailResult = sendEmail($formData, $type);
+    $emailResult = sendEmail($formData, $type, $randomName);
     if (!$emailResult['success']) {
       $toastr_message .= " However, " . $emailResult['message'];
       $toastr_type = "warning";
@@ -332,6 +392,30 @@ $conn->close();
       transform: rotate(180deg);
       animation: fly 4s ease-in-out infinite alternate;
     }
+    .slider-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background: #f8f9fa;
+    }
+    .range-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+    }
+    .range-value {
+        font-weight: bold;
+        color: #e91e63;
+    }
+    .form-range::-webkit-slider-thumb {
+        background: #e91e63;
+    }
+    .form-range::-moz-range-thumb {
+        background: #e91e63;
+    }    
 
     @keyframes fly {
       0% {
@@ -599,7 +683,7 @@ $conn->close();
             <h1 class="text-center">USA-India Flight Deals For Any City, Any Date!</h1>
             <!-- <h3 class="text-center">Exclusive USA–India Round-Trips — Just $999! Any City, Any Date — Your Journey, Our
               Expertise.</h3> -->
-            <p class="text-center">One-Way, Round Trip - We'll Plan Your India Trip Your Way</p>
+            <p class="text-center">One-Way, Round Trip, Multi-City - We'll Plan Your India Trip Your Way</p>
           </div>
 
           <div class="col-lg-6 order-1 order-lg-1 text-center" data-aos="zoom-out">
@@ -668,6 +752,36 @@ $conn->close();
                     <input type="text" name="arrival_place[]" placeholder="Arrival place" class="form-control" required />
                   </div>
                 </div>
+                <div class="row mb-3">
+                  <div class="col-4">
+                    <div class="form-control">
+                        <div class="range-label">
+                            <span>Adults (12+ years)</span>
+                        </div>
+                        <input type="range" name="adult" class="form-range" id="adultSlider" min="1" max="10" value="1">
+                        <span>Count: <span class="range-value" id="adultCount">0</span></span>                           
+                    </div>
+                  </div>
+                  <div class="col-4">
+                      <div class="form-control">
+                        <div class="range-label">
+                            <span>Children (2-11years)</span>
+                        </div>
+                        <input type="range" name="child" class="form-range" id="childSlider" min="0" max="10" value="0">
+                        <span>Count: <span class="range-value" id="childCount">0</span></span>                          
+                      </div>
+                  </div>
+                  <div class="col-4">
+                      <div class="form-control">
+                        <div class="range-label">
+                            <span>Infant (0-2 years)</span>
+                        </div>
+                        <input type="range" name="infant" class="form-range" id="infantSlider" min="0" max="10" value="0">
+                        <span>Count: <span class="range-value" id="infantCount">0</span></span>                          
+                      </div>
+                  </div>
+                </div>
+                
                 <!-- Traveler Info -->
                 <div class="row g-2 mb-3">
                   <div class="col-md-12">
@@ -678,8 +792,12 @@ $conn->close();
                   </div>
                   <div class="col-md-6">
                     <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required />
+                  </div>                 
+                  <div class="col-md-6">
+                      <label for="screen-shot">Upload Your Screenshot</label>
+                      <input type="file" id="screen-shot" name="image">
                   </div>
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <textarea class="form-control mb-2" name="details" value="" placeholder="Additional Information" rows="2" col="3"></textarea>
                   </div>
                 </div>
@@ -691,7 +809,7 @@ $conn->close();
 
             <!-- One Way Form -->
             <div id="oneWayForm" style="display: none;">
-              <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="p-3 border rounded shadow-sm">
+              <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="p-3 border rounded shadow-sm"  enctype="multipart/form-data">
                 <input name="type" class="form-control" value="one-trip" hidden />
                 <!-- Departure Date Only -->
                 <div class="row g-2 mb-3">
@@ -712,6 +830,39 @@ $conn->close();
                     </div>
                   </div>
                   <!-- Traveler Info -->
+                   <div class="row">
+                      <div class="col-4">
+                        <div class="form-control">
+                            <div class="range-label">
+                                <span>Adults (12+ years)</span>
+                            </div>
+                            <input type="range" name="adult" class="form-range" id="adultSlider" min="1" max="10" value="1">
+                            <span>Count: <span class="range-value" id="adultCount">0</span></span>                           
+                        </div>
+                      </div>
+                      <div class="col-4">
+                          <div class="form-control">
+                            <div class="range-label">
+                                <span>Children (2-11years)</span>
+                            </div>
+                            <input type="range" name="child" class="form-range" id="childSlider" min="0" max="10" value="0">
+                            <span>Count: <span class="range-value" id="childCount">0</span></span>                          
+                          </div>
+                      </div>
+                      <div class="col-4">
+                          <div class="form-control">
+                            <div class="range-label">
+                                <span>Infant (0-2 years)</span>
+                            </div>
+                            <input type="range" name="infant" class="form-range" id="infantSlider" min="0" max="10" value="0">
+                            <span>Count: <span class="range-value" id="infantCount">0</span></span>                          
+                          </div>
+                      </div>
+                    </div>
+                      <!-- Children Slider -->
+           
+
+                   
                   <div class="row g-2 mb-3">
                     <div class="col-md-12">
                       <input type="text" class="form-control mb-2" name="full_name" placeholder="Full Name" required />
@@ -723,6 +874,13 @@ $conn->close();
                       <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required />
                     </div>
                     <div class="col-md-12">
+                      <input type="number" class="form-control" name="passengers" placeholder="Number Of Passengers" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="screen-shot">Screenshot</label>
+                        <input type="file" id="screen-shot" name="image">
+                    </div>                    
+                    <div class="col-md-6">
                       <textarea class="form-control mb-2" name="details" value="" placeholder="Additional Information" ></textarea>
                     </div>
                   </div>
@@ -1301,7 +1459,7 @@ $conn->close();
       </div>
     </div>
     <div class="bg-primary text-white">
-      <div class="container footer-top">
+      <div class="container footer-top p-4">
         <div class="row gy-4">
           <div class="col-md-4">
             <a href="#" class="d-flex justify-content-center align-items-center footer-logo">
@@ -1309,13 +1467,14 @@ $conn->close();
               <img src="assets/img/logo-4.png" alt="" srcset="" class="mx-auto">
             </a>
           </div>
-          <div class="col-md-4">
-            <p class="text-center mt-2"><strong>Address:</strong> 8 The Green, Suite B,</p>
-            <p class="text-center">Dover,Delaware -19901</p>
-            <p class="mt-3 text-center"><strong>Phone:</strong><a href="tel:+1 (229) 329-1796" class="text-white"> +1 (229) 329-1796</a></p>
-            <p class="mt-3 text-center"><strong>WhatsApp:</strong><a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="text-white"> +1954-347-5414</a></p>
-            <!-- <p class="mt-3 text-center"><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p> -->
-            <p class="mt-3 text-center">
+          <div class="col-md-4 text-center">
+            <h5 class="text-white mb-3">Contact Info</h5>
+            <p class=" mt-2"><strong>Address:</strong> 8 The Green, Suite B,</p>
+            <p class="">Dover,Delaware -19901</p>
+            <p class="mt-3 "><strong>Phone:</strong><a href="tel:+1 (229) 329-1796" class="text-white"> +1 (229) 329-1796</a></p>
+            <p class="mt-3 "><strong>WhatsApp:</strong><a href="https://w.meta.me/s/1VjD9RIXA2l48dm" class="text-white"> +1954-347-5414</a></p>
+            <!-- <p class="mt-3 "><strong>WhatsApp:</strong> <a href="tel:+1954-347-5414" class="text-white">+1954-347-5414</a></p> -->
+            <p class="mt-3 ">
               <strong>Email:</strong>
               <a href="mailto:info@gogotripsus.com?subject=Travel Inquiry" class="text-white">
                 <span> info@gogotripsus.com</span>
@@ -1469,6 +1628,30 @@ $conn->close();
         modalShown = false; // Reset when user scrolls up
       }
     });
+  </script>
+  <script>
+        function updatePassengerCount() {
+            const adultSlider = document.getElementById('adultSlider');
+            const childSlider = document.getElementById('childSlider');
+            const infantSlider = document.getElementById('infantSlider');
+            const adultCount = document.getElementById('adultCount');
+            const childCount = document.getElementById('childCount');
+            const infantCount = document.getElementById('infantCount');
+            const totalPassengers = document.getElementById('totalPassengers');
+
+            adultCount.textContent = adultSlider.value;
+            childCount.textContent = childSlider.value;
+            infantCount.textContent = infantSlider.value;
+            totalPassengers.textContent = parseInt(adultSlider.value) + parseInt(childSlider.value) + parseInt(infantSlider.value);
+        }
+
+        // Event listeners for sliders
+        document.getElementById('adultSlider').addEventListener('input', updatePassengerCount);
+        document.getElementById('childSlider').addEventListener('input', updatePassengerCount);
+        document.getElementById('infantSlider').addEventListener('input', updatePassengerCount);
+
+        // Initialize counts on page load
+        updatePassengerCount();    
   </script>
   <script>
     <?php if (!empty($toastr_message)): ?>

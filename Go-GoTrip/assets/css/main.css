@@ -584,6 +584,7 @@ h6 {
 }
 
 .footer .footer-top {
+  max-width: 900px;
   padding-top: 20px;
 }
 
